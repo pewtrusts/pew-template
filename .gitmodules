@@ -1,0 +1,3 @@
+[submodule "submodules/pewmocksite"]
+	path = submodules/pewmocksite
+	url = git@github.com:pewtrusts/pewmocksite.git

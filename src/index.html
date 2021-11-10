@@ -1,0 +1,11 @@
+<div id="pew-app" class="pct-section no-js">
+    <script crossorigin="anonymous" src="https://polyfill.io/v3/polyfill.min.js?features=default%2CArray.prototype.find%2CArray.prototype.includes%2CNodeList.prototype.forEach"></script>
+    <% for (var css in htmlWebpackPlugin.files.css) { %>
+    <link class="emitted-css" href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
+    <% } %>
+    <p>foo bar</p>
+</div>
+<div class="clearfix"></div>
+<% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+<script class="emitted-bundle" src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
+<% } %>
