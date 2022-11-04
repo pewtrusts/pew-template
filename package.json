@@ -1,5 +1,5 @@
 {
-  "name": "krill",
+  "name": "pew-template",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,27 +7,27 @@
     "build": "cross-env NODE_ENV=production webpack",
     "preview": "cross-env NODE_ENV=preview webpack",
     "localpreview": "cross-env NODE_ENV=localpreview webpack",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --content-base public --port 8081",
-    "dev:100": "cross-env NODE_ENV=development COLUMN_SIZE=100 webpack-dev-server --content-base public --port 8081",
-    "dev:70": "cross-env NODE_ENV=development COLUMN_SIZE=70 webpack-dev-server --content-base public --port 8081",
-    "broadcast": "cross-env NODE_ENV=development webpack-dev-server --content-base public --open --host 0.0.0.0 --port 8000"
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --port 8081",
+    "dev:100": "cross-env NODE_ENV=development COLUMN_SIZE=100 webpack-dev-server --port 8081",
+    "dev:70": "cross-env NODE_ENV=development COLUMN_SIZE=70 webpack-dev-server --port 8081",
+    "broadcast": "cross-env NODE_ENV=development webpack-dev-server --open --host 0.0.0.0 --port 8000"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pewtrusts/krill.git"
+    "url": "git+https://github.com/pewtrusts/pew-template.git"
   },
-  "author": "John Osterman",
+  "author": "Drew Swinburne",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pewtrusts/krill/issues"
+    "url": "https://github.com/pewtrusts/pew-template/issues"
   },
-  "homepage": "https://github.com/pewtrusts/krill#readme",
+  "homepage": "https://github.com/pewtrusts/pew-template#readme",
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^5.1.1",
+    "copy-webpack-plugin": "^10.2.4",
     "cross-env": "^5.2.0",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
@@ -55,8 +55,8 @@
     "svelte-loader-hot": "^0.3.1",
     "svelte-preprocess-sass": "^1.0.0",
     "terser-webpack-plugin": "^2.3.4",
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.2"
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.9.0"
   }
 }
