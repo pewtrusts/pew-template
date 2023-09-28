@@ -120,7 +120,7 @@ function returnJSUse() {
                 "presets": [
                     ["@babel/preset-env", {
                         "useBuiltIns": "usage",
-                        "corejs": "3.16"
+                        "corejs": "3.32.2"
                     }]
                 ]
             }
@@ -349,7 +349,7 @@ if ( isDev ){
    // plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 if (!isDev) {
-    plugins.push(new CleanWebpackPlugin(), prerender);
+    plugins.push(new CleanWebpackPlugin());
 }
 const entry = process.env.NOHYDRATE == 'true' ? {
     render: ['./src/index.js'],
