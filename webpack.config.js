@@ -5,6 +5,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
+
 const pretty = require('pretty');
 const PrerenderSPAPlugin = require('prerender-spa-plugin');
 const mode = process.env.NODE_ENV === 'development' ? 'development' : 'production';
@@ -44,7 +46,7 @@ const copyWebpack = new CopyWebpackPlugin({
                     // also changes references to 'pew' to refer to 'Pew'
                     return content.toString().replace(/url\(\/([^/])/g, 'url(/' + repoName + '/$1').replace(/\/pew\//g, '/Pew/');
                 } else {
-                    return content.toString();
+                    return content.toString().replace(/\/pew\//g, '/Pew/');
                 }
             }
         }]});
@@ -89,6 +91,13 @@ const devToolPlugins = [new webpack.SourceMapDevToolPlugin({
         return `webpack:///${info.resourcePath}?${info.hash}`;
     },
 })];
+const eslintOptions = {
+    extensions: [`js`],
+    exclude: [
+      `/node_modules/`,
+      `/bower_components/`,
+    ]
+}
 const plugins = [
     new HtmlWebpackPlugin({
         title: 'TEMPLATE',
@@ -106,30 +115,31 @@ const plugins = [
         'BUILDTYPE': '"' + process.env.NODE_ENV + '"',
         'NOHYDRATE': '"' + process.env.NOHYDRATE + '"',
     }),
+    new ESLintPlugin(eslintOptions)
 ];
 
-function returnJSUse() {
-    if ( isDev ){
-        return [{
-            loader: 'eslint-loader'
-        }];
-    } else {
-        return [{
-            loader: 'babel-loader',
-            options: {
-                "presets": [
-                    ["@babel/preset-env", {
-                        "useBuiltIns": "usage",
-                        "corejs": "3.32.2"
-                    }]
-                ]
-            }
-        },
-        {
-            loader: 'eslint-loader'
-        }];
-    }
-}
+// function returnJSUse() {
+//     if ( isDev ){
+//         return [{
+//             loader: 'eslint-loader'
+//         }];
+//     } else {
+//         return [{
+//             loader: 'babel-loader',
+//             options: {
+//                 "presets": [
+//                     ["@babel/preset-env", {
+//                         "useBuiltIns": "usage",
+//                         "corejs": "3.32.2"
+//                     }]
+//                 ]
+//             }
+//         },
+//         {
+//             loader: 'eslint-loader'
+//         }];
+//     }
+// }
 function onwarn(warning, handleWarning) {
 
     if (warning.code === 'a11y-no-onchange') { return }
@@ -181,11 +191,11 @@ const rules = [
             }
         }]
     },
-    {
-            test: /\.js$|\.mjs$/,
-            exclude: /node_modules\/(?!(d3-array\/)).*/,
-            use: returnJSUse()
-        },
+    // {
+    //         test: /\.js$|\.mjs$/,
+    //         exclude: /node_modules\/(?!(d3-array\/)).*/,
+    //         use: returnJSUse()
+    //     },
         {
             test: /\.css$/,
             use: [
@@ -297,7 +307,7 @@ const rules = [
         test: /\.(png|jpg)$/,
         loader: 'file-loader',
         options: {
-            name: '[path][name].[ext]?v=[hash:6]',
+            name: '[path][name].[ext]?v=[chunkhash]',
             context: './src' 
         }
     },
@@ -382,7 +392,7 @@ module.exports = env => {
         },
         output: {
             path: __dirname + '/' + outputFolder,
-            filename: '[name].js?v=[hash:6]',
+            filename: '[name].js?v=[chunkhash]',
             chunkFilename: '[name].[id].js',
         },
         plugins,
@@ -392,6 +402,8 @@ module.exports = env => {
                 "@Data": path.resolve('src/data'),
                 "@Project": path.resolve('src'),
             },
+            extensions: ['.mjs', '.js', '.svelte'],
+            conditionNames: ['require', 'node', 'svelte']
         },
     }
 };
