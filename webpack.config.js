@@ -403,7 +403,7 @@ module.exports = env => {
                 "@Project": path.resolve('src'),
             },
             extensions: ['.mjs', '.js', '.svelte'],
-            conditionNames: ['require', 'node', 'svelte']
+            conditionNames: ['require', 'node', 'svelte', 'browser']
         },
     }
 };
