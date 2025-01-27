@@ -65,7 +65,7 @@ const prerender =
             // renderAfterDocumentEvent: 'custom-render-trigger'
         }),
         postProcess: function (renderedRoute) {
-            // renderedRoute.html = renderedRoute.html.replace('src="hydrate.js', 'src="' + publicPath + 'hydrate.js');
+            renderedRoute.html = renderedRoute.html.replace('src="hydrate.js', 'src="' + publicPath + 'hydrate.js');
             renderedRoute.html = renderedRoute.html.replace(/<script.*?src="render.*?<\/script>/, '');
             renderedRoute.html = renderedRoute.html.replace('<link href="styles.css', '<link href="' + publicPath + 'styles.css');
             if (isProd) {
@@ -359,13 +359,13 @@ if ( isDev ){
    // plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 if (!isDev) {
-    plugins.push(new CleanWebpackPlugin());
+    plugins.push(new CleanWebpackPlugin(), prerender);
 }
 const entry = process.env.NOHYDRATE == 'true' ? {
     render: ['./src/index.js'],
 } : {
     render: ['./src/index.js'],
-    // hydrate: ['./src/hydrate.js']
+    hydrate: ['./src/hydrate.js']
 };
 module.exports = env => {
     return {
